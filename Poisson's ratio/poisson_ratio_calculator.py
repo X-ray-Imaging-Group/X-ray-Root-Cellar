@@ -27,6 +27,8 @@ def cross_vector(v1, v2):
 
 def calculator(material, reflection_hkl, bending_hkl, chi=0):
     """
+    References: Wortman, J. J., & Evans, R. A. (1965). Young’s modulus, shear modulus, and poisson’s ratio in silicon
+    and germanium. Journal of Applied Physics, 36(1), 153–156. https://doi.org/10.1063/1.1713863
 
     Parameters
     ----------
@@ -40,23 +42,26 @@ def calculator(material, reflection_hkl, bending_hkl, chi=0):
     Poisson's ratio on ZX direction.
     """
     chi = np.radians(chi)
-    # ZR = dict(zip(['h','k','l'], reflection_hkl))
-    # Y = dict(zip(['h','k','l'], bending_hkl))
+    # XR, YR, ZR for Reflection related dimensions
     ZR = np.array(reflection_hkl)
     Y = np.array(bending_hkl)
     XR = np.cross(Y, ZR)
 
+    # **n for NORMALIZED vector
     XRn = normalize_vector(XR)
     # Yn = normalize_vector(Y)
     ZRn = normalize_vector(ZR)
 
+    # X, Y, Z for crystal orientation related dimensions
     X = XRn * np.cos(chi) - ZRn * np.sin(chi)
     Z = np.cross(X, Y)
 
+    # *n for NORMALIZED vector
     Xn = normalize_vector(X)
     Yn = normalize_vector(Y)
     Zn = normalize_vector(Z)
 
+    # sc** for Compliance coefficient
     sc11 = material_compliance(material, 's11')
     sc12 = material_compliance(material, 's12')
     sc44 = material_compliance(material, 's44')
