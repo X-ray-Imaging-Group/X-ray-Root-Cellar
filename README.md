@@ -7,4 +7,3 @@ Dean Chapman's group stored their tools and documentation here for X-ray physics
   - [ ] 
 - [ ] Meanings of the terms in Magic condition equations.
   - Materials: 'Dean_Bent-Laue-Delta-E-Figure.pptx'.
-  - test
